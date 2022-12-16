@@ -1,26 +1,27 @@
-var spieler = document.querySelector(".player img");
-var spielfeld = document.querySelector(".playground");
-var score = 0;
-var punkteAnzeige = document.querySelector(".punkte");
-var backgroundPosition = 0;
+const spieler = document.querySelector(".player img");
+const spielfeld = document.querySelector(".playground");
+let score = 0;
+let punkteAnzeige = document.querySelector(".punkte");
+let backgroundPosition = 0;
 
 spieler.style.top = "450px";
 spieler.style.left = "500px";
 
-var timer = new Timer(150);
-var timer3 = new Timer(300);
+const timer = new Timer(150);
+const timer2 = new Timer(300);
 
-function bewegung() {
+function bewegungPlayer() {
   if (keyboard(38) && parseInt(spieler.style.top) > 275) {
     spieler.style.top = parseInt(spieler.style.top) - 25 + "px";
   }
 }
 
+//Hindernisse verschwinden, sobald die Position erreicht ist.
 function verschieben_entfernen(ellemente) {
-  for (var bla of ellemente) {
-    bla.style.left = parseInt(bla.style.left) - 5 + "px";
-    if (parseInt(bla.style.left) < 300) {
-      bla.parentNode.removeChild(bla);
+  for (const ellement of ellemente) {
+    ellement.style.left = parseInt(ellement.style.left) - 5 + "px";
+    if (parseInt(ellement.style.left) < 300) {
+      ellement.parentNode.removeChild(ellement);
     }
   }
 }
@@ -31,18 +32,19 @@ function Schwerkraft() {
   }
 }
 
+//Hindernisse werden erstellt und random angeordnet
 function hindernisse() {
   if (timer.ready()) {
     const r = Math.random();
     if (r > 0.5) {
-      var h = document.createElement("img");
+      const h = document.createElement("img");
       h.src = "img/stein.png";
       h.classList.add("stein");
       h.style.top = "570px";
       h.style.left = "1500px";
       spielfeld.appendChild(h);
     } else {
-      var h = document.createElement("img");
+      const h = document.createElement("img");
       h.src = "img/vogel.png";
       h.classList.add("vogel");
       h.style.top = "300px";
@@ -53,28 +55,32 @@ function hindernisse() {
 }
 
 function punktestand() {
-  if (timer3.ready()) {
+  if (timer2.ready()) {
     score = score + 1;
     punkteAnzeige.textContent = score;
   }
 }
 
+//Hintergrund verschiebt sich (Unendlich)
+function background() {
+  backgroundPosition = backgroundPosition + 5;
+  spielfeld.style.backgroundPosition = `-${backgroundPosition}px 0`;
+}
+
 function loop() {
-  bewegung();
+  bewegungPlayer();
   Schwerkraft();
   hindernisse();
 
-  var steine = document.querySelectorAll(".stein");
+  const steine = document.querySelectorAll(".stein");
   verschieben_entfernen(steine);
-
-  var voegle = document.querySelectorAll(".vogel");
+  const voegle = document.querySelectorAll(".vogel");
   verschieben_entfernen(voegle);
 
-  backgroundPosition = backgroundPosition + 5;
-  spielfeld.style.backgroundPosition = `-${backgroundPosition}px 0`;
-
+  background();
   punktestand();
 
+  //Wenn der Spieler und eines der Elemente sich berühren, kommt man auf gameover.html
   if (anyCollision(spieler, steine)) {
     location.replace("gameover.html");
     return;
