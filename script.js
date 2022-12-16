@@ -45,7 +45,7 @@ function hindernisse() {
       spielfeld.appendChild(h);
     } else {
       const h = document.createElement("img");
-      h.src = "img/vogel.png";
+      h.src = "img/Vogel.png";
       h.classList.add("vogel");
       h.style.top = "200px";
       h.style.left = "1500px";
