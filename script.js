@@ -4,14 +4,14 @@ let score = 0;
 let punkteAnzeige = document.querySelector(".punkte");
 let backgroundPosition = 0;
 
-spieler.style.top = "450px";
+spieler.style.top = "350px";
 spieler.style.left = "500px";
 
 const timer = new Timer(150);
 const timer2 = new Timer(300);
 
 function bewegungPlayer() {
-  if (keyboard(38) && parseInt(spieler.style.top) > 275) {
+  if (keyboard(38) && parseInt(spieler.style.top) > 175) {
     spieler.style.top = parseInt(spieler.style.top) - 25 + "px";
   }
 }
@@ -27,7 +27,7 @@ function verschieben_entfernen(ellemente) {
 }
 
 function Schwerkraft() {
-  if (parseInt(spieler.style.top) < 450) {
+  if (parseInt(spieler.style.top) < 350) {
     spieler.style.top = parseInt(spieler.style.top) + 5 + "px";
   }
 }
@@ -40,14 +40,14 @@ function hindernisse() {
       const h = document.createElement("img");
       h.src = "img/stein.png";
       h.classList.add("stein");
-      h.style.top = "570px";
+      h.style.top = "470px";
       h.style.left = "1500px";
       spielfeld.appendChild(h);
     } else {
       const h = document.createElement("img");
       h.src = "img/vogel.png";
       h.classList.add("vogel");
-      h.style.top = "300px";
+      h.style.top = "200px";
       h.style.left = "1500px";
       spielfeld.appendChild(h);
     }
